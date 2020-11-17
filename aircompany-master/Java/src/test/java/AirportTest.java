@@ -1,3 +1,4 @@
+import org.testng.annotations.DataProvider;
 import planes.ExperimentalPlane;
 import models.ClassificationLevel;
 import models.ExperimentalType;
@@ -35,12 +36,27 @@ public class AirportTest {
         return new Airport(planes);
     }
 
-    @Test
-    public void testGetTransportMilitaryPlanes() {
-        List<MilitaryPlane> transportMilitaryPlanes = getAirport()
-                .getSpecifiedTypeOfMilitaryPlanes(MilitaryType.TRANSPORT);
-        Assert.assertEquals(transportMilitaryPlanes.get(0).getType(), MilitaryType.TRANSPORT);
-        Assert.assertEquals(transportMilitaryPlanes.size(), 1);
+    @DataProvider()
+    public Object[][] militaryPlanesWithDifferentTypesProvider() {
+        return new Object[][]{
+            {MilitaryType.TRANSPORT, Arrays.asList(
+                    new MilitaryPlane("C-130 Hercules", 650, 5000, 110000, MilitaryType.TRANSPORT)
+            )},
+            {MilitaryType.BOMBER, Arrays.asList(
+                    new MilitaryPlane("B-1B Lancer", 1050, 21000, 80000, MilitaryType.BOMBER),
+                    new MilitaryPlane("B-2 Spirit", 1030, 22000, 70000, MilitaryType.BOMBER),
+                    new MilitaryPlane("B-52 Stratofortress", 1000, 20000, 80000, MilitaryType.BOMBER)
+                    )},
+            {MilitaryType.FIGHTER, Arrays.asList(
+                    new MilitaryPlane("F-15", 1500, 12000, 10000, MilitaryType.FIGHTER),
+                    new MilitaryPlane("F-22", 1550, 13000, 11000, MilitaryType.FIGHTER)
+            )}
+        };
+    }
+
+    @Test(dataProvider = "militaryPlanesWithDifferentTypesProvider")
+    public void testGetTransportMilitaryPlanes(MilitaryType militaryType, List<MilitaryPlane> expectedList) {
+        Assert.assertEquals(getAirport().getSpecifiedTypeOfMilitaryPlanes(militaryType), expectedList);
     }
 
     @Test
