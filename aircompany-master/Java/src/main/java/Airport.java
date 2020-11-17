@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-// version: 1.1
-// made by Vitali Shulha
-// 4-Jan-2019
-
 public class Airport {
     private List<? extends Plane> planes;
 
