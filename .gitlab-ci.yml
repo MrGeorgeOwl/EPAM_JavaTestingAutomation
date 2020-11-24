@@ -1,5 +1,6 @@
 variables:
     POM_PATH: ./aircompany-master/Java/pom.xml
+    REPORT_PATH: ./aircompany-master/Java/src/target/site/cobertura.xml
 
 test:
     tags:
@@ -7,5 +8,18 @@ test:
         - maven
     script:
         - echo "Executing tests"
-        - ls -l && ls ./aircompany-master/
         - mvn -f $POM_PATH clean test
+
+
+coverage:
+    tags:
+        - java8
+        - maven
+    script:
+        - echo "Collecting coverage"
+        - mvn -f $POM_PATH cobertura:cobertura
+    needs:
+        - "test"
+    artifacts:
+        reports:
+            cobertura: $REPORT_PATH
