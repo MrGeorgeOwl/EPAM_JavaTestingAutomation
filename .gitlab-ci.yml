@@ -1,7 +1,10 @@
+variables:
+    POM_PATH: ./aircompany-master/Java/src/pom.xml
+
 test:
     tags:
         - java8
         - maven
     script:
         - echo "Executing tests"
-        - mvn clean test
+        - mvn -f $POM_PATH clean test
