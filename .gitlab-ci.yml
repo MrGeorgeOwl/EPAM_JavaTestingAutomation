@@ -2,7 +2,12 @@ variables:
     POM_PATH: ./aircompany-master/Java/pom.xml
     REPORT_PATH: ./aircompany-master/Java/src/target/site/cobertura.xml
 
-test:
+stages:
+    - test
+    - coverage
+
+test-job:
+    stage: test
     tags:
         - java8
         - maven
@@ -11,7 +16,8 @@ test:
         - mvn -f $POM_PATH clean test
 
 
-coverage:
+coverage-job:
+    stage: coverage
     tags:
         - java8
         - maven
