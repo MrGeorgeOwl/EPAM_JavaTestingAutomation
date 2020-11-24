@@ -7,4 +7,4 @@ test:
         - maven
     script:
         - echo "Executing tests"
-        - mvn -f $POM_PATH clean test
+        - ls -l
