@@ -30,9 +30,9 @@ coverage-job:
         - 'python /opt/cover2cover.py $PROJECT_PATH/target/site/jacoco/jacoco.xml $PROJECT_PATH/src/main/java > $PROJECT_PATH/target/site/cobertura.xml'
     # read the <source></source> tag and prepend the path to every filename attribute
         - 'python /opt/source2filename.py $PROJECT_PATH/target/site/cobertura.xml'
-  needs: ["test-job"]
-  dependencies:
-    - test-job
-  artifacts:
-    reports:
-      cobertura: $PROJECT_PATH/target/site/cobertura.xml
+    needs: ["test-job"]
+    dependencies:
+        - test-job
+    artifacts:
+        reports:
+            cobertura: $PROJECT_PATH/target/site/cobertura.xml
