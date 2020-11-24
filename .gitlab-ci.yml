@@ -25,7 +25,7 @@ coverage-job:
         - echo "Collecting coverage"
         - mvn -f $POM_PATH cobertura:cobertura
     needs:
-        - "test"
+        - "test-job"
     artifacts:
         reports:
             cobertura: $REPORT_PATH
