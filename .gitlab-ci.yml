@@ -1,4 +1,7 @@
 test:
+    tags:
+        - java8
+        - maven
     script:
         - echo "Executing tests"
         - mvn clean test
