@@ -24,6 +24,9 @@ coverage-job:
     script:
         - echo "Collecting coverage"
         - mvn -f $POM_PATH cobertura:cobertura
+        - ls -l ./aircompany-master/Java/
+        - ls -l ./aircompany-master/Java/target/
+        - ls -l ./aircompany-master/Java/target/site/
     needs:
         - "test-job"
     artifacts:
