@@ -1,6 +1,6 @@
 variables:
     POM_PATH: ./aircompany-master/Java/pom.xml
-    PROJECT_PATH: ./aircompany-master/Java
+    REPORT_PATH: ./aircompany-master/Java/target/site/cobertura/coverage.xml
 
 stages:
     - test
@@ -13,10 +13,7 @@ test-job:
         - maven
     script:
         - echo "Executing tests"
-        - mvn -f $POM_PATH clean org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report
-    artifacts:
-        paths:
-        - $PROJECT_PATH/target/site/jacoco/jacoco.xml
+        - mvn -f $POM_PATH clean test
 
 
 coverage-job:
@@ -24,15 +21,11 @@ coverage-job:
     tags:
         - java8
         - maven
-    image: haynes/jacoco2cobertura:1.0.4
     script:
-    # convert report from jacoco to cobertura
-        - 'python /opt/cover2cover.py $PROJECT_PATH/target/site/jacoco/jacoco.xml $PROJECT_PATH/src/main/java > $PROJECT_PATH/target/site/cobertura.xml'
-    # read the <source></source> tag and prepend the path to every filename attribute
-        - 'python /opt/source2filename.py $PROJECT_PATH/target/site/cobertura.xml'
-    needs: ["test-job"]
-    dependencies:
-        - test-job
+        - echo "Collecting coverage"
+        - mvn -f $POM_PATH cobertura:cobertura
+    needs:
+        - "test-job"
     artifacts:
         reports:
-            cobertura: $PROJECT_PATH/target/site/cobertura.xml
+            cobertura: $REPORT_PATH
