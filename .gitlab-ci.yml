@@ -1,6 +1,6 @@
 variables:
     POM_PATH: ./aircompany-master/Java/pom.xml
-    REPORT_PATH: ./aircompany-master/Java/target/site/cobertura
+    REPORT_PATH: ./aircompany-master/Java/target/site/cobertura/
 
 stages:
     - test
