@@ -1,5 +1,5 @@
 variables:
-    POM_PATH: aircompany-master/Java/src/pom.xml
+    POM_PATH: ./aircompany-master/Java/src/pom.xml
 
 test:
     tags:
@@ -7,4 +7,5 @@ test:
         - maven
     script:
         - echo "Executing tests"
-        - ls -l
+        - ls -l && ls ./aircompany-master/
+        - mvn -f $POM_PATH clean test
