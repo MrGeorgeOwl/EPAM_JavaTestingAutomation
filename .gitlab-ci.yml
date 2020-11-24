@@ -1,0 +1,34 @@
+variables:
+    POM_PATH: ./aircompany-master/Java/pom.xml
+    REPORT_PATH: ./aircompany-master/Java/target/site/cobertura.xml
+
+stages:
+    - test
+    - coverage
+
+test-job:
+    stage: test
+    tags:
+        - java8
+        - maven
+    script:
+        - echo "Executing tests"
+        - mvn -f $POM_PATH clean test
+
+
+coverage-job:
+    stage: coverage
+    tags:
+        - java8
+        - maven
+    script:
+        - echo "Collecting coverage"
+        - mvn -f $POM_PATH cobertura:cobertura
+        - ls -l ./aircompany-master/Java/
+        - ls -l ./aircompany-master/Java/target/
+        - ls -l ./aircompany-master/Java/target/site/cobertura/
+    needs:
+        - "test-job"
+    artifacts:
+        reports:
+            cobertura: $REPORT_PATH
