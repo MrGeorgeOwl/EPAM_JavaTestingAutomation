@@ -29,4 +29,6 @@ coverage-job:
     artifacts:
         reports:
             cobertura: $REPORT_PATH
+        paths:
+            - ./aircompany-master/Java/target/site/cobertura
         expire_in: 1 days
