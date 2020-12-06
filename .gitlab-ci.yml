@@ -1,34 +1,44 @@
 variables:
-    POM_PATH: ./aircompany-master/Java/pom.xml
-    REPORT_PATH: ./aircompany-master/Java/target/site/cobertura/coverage.xml
+    CLEAN_CODE_POM_PATH: ./aircompany-master/Java/pom.xml
+    CLEAN_CODE_REPORT_PATH: ./aircompany-master/Java/target/site/cobertura/coverage.xml
+    WEBDRIVER_POM_PATH: ./webdriver-task/pom.xml
 
 stages:
     - test
     - coverage
 
-test-job:
+clean-code-test:
     stage: test
     tags:
         - java8
         - maven
     script:
         - echo "Executing tests"
-        - mvn -f $POM_PATH clean test
+        - mvn -f $CLEAN_CODE_POM_PATH clean test
+
+webdriver-test:
+    image: maven:3.6.3-jdk-11
+    stage: test
+    tags:
+        - java8
+        - maven
+    script:
+        - mvn -f $WEBDRIVER_POM_PATH clean test
 
 
-coverage-job:
+clean-code-coverage:
     stage: coverage
     tags:
         - java8
         - maven
     script:
         - echo "Collecting coverage"
-        - mvn -f $POM_PATH cobertura:cobertura
+        - mvn -f $CLEAN_CODE_POM_PATH cobertura:cobertura
     needs:
-        - "test-job"
+        - "clean-code-test"
     artifacts:
         reports:
-            cobertura: $REPORT_PATH
+            cobertura: $CLEAN_CODE_REPORT_PATH
         paths:
             - ./aircompany-master/Java/target/site/cobertura
         expire_in: 1 days
