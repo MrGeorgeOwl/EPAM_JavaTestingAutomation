@@ -48,7 +48,7 @@ public class DodoPizzaTest {
 
         WebElement price = new WebDriverWait(driver, Duration.ofSeconds(10).toSeconds())
                 .until(d -> d.findElement(By.cssSelector("span .money__value")));
-        Assert.assertEquals(price.getText(), "23,90");
+        Assert.assertEquals(price.getText(), "25,90");
     }
 
     @Test
