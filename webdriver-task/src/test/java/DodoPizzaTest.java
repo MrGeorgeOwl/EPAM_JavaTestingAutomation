@@ -1,17 +1,19 @@
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import page.CartPage;
-import page.MainPage;
+
+import java.time.Duration;
+import java.util.List;
 
 
 public class DodoPizzaTest {
 
     WebDriver driver;
-    MainPage mainPage;
-    CartPage cartPage;
+    JavascriptExecutor executor;
 
     @BeforeClass
     private void setUp() {
@@ -19,9 +21,7 @@ public class DodoPizzaTest {
         ChromeOptions options = new ChromeOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         driver = new ChromeDriver(options);
-
-        mainPage = new MainPage(driver);
-        cartPage = new CartPage(driver);
+        executor = (JavascriptExecutor)driver;
     }
 
     @AfterClass
@@ -36,19 +36,38 @@ public class DodoPizzaTest {
 
     @Test
     public void testAddingPizzaToCartPrice() {
-        mainPage.openPage();
-        mainPage.addPizzaToCart("Нежный лосось");
+        driver.get("https://dodopizza.by/minsk");
+        WebElement buyButton = driver.findElement(By.xpath("//*[@id=\"pizzas\"]/article[2]/footer/button"));
+        executor.executeScript("arguments[0].click();", buyButton);
 
-        cartPage.openPage();
-        Assert.assertEquals(cartPage.getPrice(), "25,90");
+        WebElement popupBuyButton = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div/div[2]/div[2]/button"));
+        executor.executeScript("arguments[0].click();", popupBuyButton);
+
+        WebElement cartButton = driver.findElement(By.xpath("//*[@id=\"react-app\"]/nav/div/div[2]/div[2]/button"));
+        executor.executeScript("arguments[0].click();", cartButton);
+
+        WebElement price = new WebDriverWait(driver, Duration.ofSeconds(10).toSeconds())
+                .until(d -> d.findElement(By.cssSelector("span .money__value")));
+        Assert.assertEquals(price.getText(), "25,90");
     }
 
     @Test
     public void testAddingPizzaToCartAmountOfPizzas() {
-        mainPage.openPage();
-        mainPage.addPizzaToCart("Нежный лосось");
+        driver.manage().deleteAllCookies();
+        driver.get("https://dodopizza.by/minsk");
+        WebElement buyButton = driver.findElement(By.xpath("//*[@id=\"pizzas\"]/article[2]/footer/button"));
+        executor.executeScript("arguments[0].click();", buyButton);
 
-        cartPage.openPage();
-        Assert.assertEquals(cartPage.getPizzas().size(), 1);
+        WebElement popupBuyButton = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div/div[2]/div[2]/button"));
+        executor.executeScript("arguments[0].click();", popupBuyButton);
+
+        WebElement cartButton = driver.findElement(By.xpath("//*[@id=\"react-app\"]/nav/div/div[2]/div[2]/button"));
+        executor.executeScript("arguments[0].click();", cartButton);
+        WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(60).getSeconds());
+
+        List<WebElement> pizzas = pizzaWait
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"react-app\"]/main/section[1]/article")));
+
+        Assert.assertEquals(pizzas.size(), 1);
     }
 }
