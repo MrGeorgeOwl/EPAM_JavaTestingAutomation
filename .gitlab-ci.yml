@@ -4,30 +4,8 @@ variables:
     WEBDRIVER_POM_PATH: ./webdriver-task/pom.xml
 
 stages:
-    - build
     - test
     - coverage
-
-
-webdriver-build:
-    image: maven:3.6.3-jdk-11
-    stage: build
-    tags:
-        - java8
-        - maven
-    script:
-        - mvn -f $WEBDRIVER_POM_PATH compile
-
-webdriver-test:
-    image: maven:3.6.3-jdk-11
-    stage: test
-    tags:
-        - java8
-        - maven
-    needs:
-        - "webdriver-build"
-    script:
-        - mvn -f $WEBDRIVER_POM_PATH clean test
 
 clean-code-test:
     stage: test
