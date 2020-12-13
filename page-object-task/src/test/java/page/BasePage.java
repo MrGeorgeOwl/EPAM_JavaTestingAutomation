@@ -2,14 +2,15 @@ package page;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-abstract public class AbstractBasePage {
+public class BasePage {
 
-    private WebDriver driver;
-    private JavascriptExecutor executor;
-    private final String url;
+    protected WebDriver driver;
+    protected JavascriptExecutor executor;
+    protected final String url;
 
-    public AbstractBasePage(WebDriver driver, String url) {
+    public BasePage(WebDriver driver, String url) {
         this.driver = driver;
         this.executor = (JavascriptExecutor) driver;
         this.url = url;
@@ -33,5 +34,9 @@ abstract public class AbstractBasePage {
 
     public void quit() {
         driver.quit();
+    }
+
+    public void pressButtonWithExecutor(WebElement button) {
+        executor.executeScript("arguments[0].click();", button);
     }
 }

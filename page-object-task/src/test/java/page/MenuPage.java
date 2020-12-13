@@ -2,26 +2,10 @@ package page;
 
 import org.openqa.selenium.*;
 
-public class MenuPage {
-    private WebDriver driver;
-    private JavascriptExecutor executor;
-    final private String url = "https://dodopizza.by/minsk";
+public class MenuPage extends BasePage {
 
     public MenuPage(WebDriver driver) {
-        this.driver = driver;
-        this.executor = (JavascriptExecutor)driver;
-    }
-
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    public String getUrl() {
-        return url;
+        super(driver, "https://dodopizza.by/minsk");
     }
 
     public WebElement getAddingPizzaButton(String name) {
@@ -31,16 +15,8 @@ public class MenuPage {
 
     public void addPizzaToCart(String name) {
         WebElement button = getAddingPizzaButton(name);
-        executor.executeScript("arguments[0].click();", button);
-        WebElement popupBuyButton = driver.findElement(By.xpath("//div[@class=\"sc-15fdqut-0 feBZgl\"]//button"));
-        executor.executeScript("arguments[0].click();", popupBuyButton);
-    }
-
-    public void openPage() {
-        driver.get(url);
-    }
-
-    public void quit() {
-        driver.quit();
+        pressButtonWithExecutor(button);
+        WebElement popupBuyButton = driver.findElement(By.xpath("//div[@class=\"sc-15fdqut-0 feBZgl\"]//button[contains(text(), \"Добавить\")]"));
+        pressButtonWithExecutor(popupBuyButton);
     }
 }

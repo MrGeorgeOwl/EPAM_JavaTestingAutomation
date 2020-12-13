@@ -1,29 +1,18 @@
 package page;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
-public class CartPage {
-    private WebDriver driver;
-    private JavascriptExecutor executor;
-    final private String url = "https://dodopizza.by/minsk/cart";
+public class CartPage extends BasePage {
 
     public CartPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-        this.executor = (JavascriptExecutor)driver;
-    }
-
-    public void openPage() {
-        driver.get(url);
+        super(driver, "https://dodopizza.by/minsk/cart");
     }
 
     public String getPrice() {
@@ -34,6 +23,6 @@ public class CartPage {
     public List<WebElement> getPizzas() {
         WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(60).getSeconds());
         return pizzaWait
-                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"react-app\"]/main/section[1]/article")));
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//section[1]/article")));
     }
 }
