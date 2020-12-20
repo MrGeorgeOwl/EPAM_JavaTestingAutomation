@@ -40,14 +40,14 @@ public class DodoPizzaTest {
     @Test
     public void testAddingPizzaToCartPrice() {
         driver.get("https://dodopizza.by/minsk");
-        WebElement buyButton = driver.findElement(By.xpath("//*[@id=\"pizzas\"]/article[2]/footer/button"));
+        WebElement buyButton = driver
+                .findElement(By.xpath("//article[main[h2[contains(text(), \"Нежный лосось\")]]]//button[contains(text(), \"Выбрать\")]"));
         executor.executeScript("arguments[0].click();", buyButton);
 
-        WebElement popupBuyButton = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div/div[2]/div[2]/button"));
+        WebElement popupBuyButton = driver.findElement(By.xpath("//div[@class=\"sc-15fdqut-0 feBZgl\"]//button[contains(text(), \"Добавить\")]"));
         executor.executeScript("arguments[0].click();", popupBuyButton);
 
-        WebElement cartButton = driver.findElement(By.xpath("//*[@id=\"react-app\"]/nav/div/div[2]/div[2]/button"));
-        executor.executeScript("arguments[0].click();", cartButton);
+        driver.get("https://dodopizza.by/minsk/cart");
 
         WebElement price = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds())
                 .until(d -> d.findElement(By.cssSelector("span .money__value")));
@@ -56,20 +56,19 @@ public class DodoPizzaTest {
 
     @Test
     public void testAddingPizzaToCartAmountOfPizzas() {
-        driver.manage().deleteAllCookies();
         driver.get("https://dodopizza.by/minsk");
-        WebElement buyButton = driver.findElement(By.xpath("//*[@id=\"pizzas\"]/article[2]/footer/button"));
+        WebElement buyButton = driver
+                .findElement(By.xpath("//article[main[h2[contains(text(), \"Нежный лосось\")]]]//button[contains(text(), \"Выбрать\")]"));
         executor.executeScript("arguments[0].click();", buyButton);
 
-        WebElement popupBuyButton = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div/div[2]/div[2]/button"));
+        WebElement popupBuyButton = driver.findElement(By.xpath("//div[@class=\"sc-15fdqut-0 feBZgl\"]//button[contains(text(), \"Добавить\")]"));
         executor.executeScript("arguments[0].click();", popupBuyButton);
 
-        WebElement cartButton = driver.findElement(By.xpath("//*[@id=\"react-app\"]/nav/div/div[2]/div[2]/button"));
-        executor.executeScript("arguments[0].click();", cartButton);
+        driver.get("https://dodopizza.by/minsk/cart");
         WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(60).getSeconds());
 
         List<WebElement> pizzas = pizzaWait
-                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"react-app\"]/main/section[1]/article")));
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//section[1]/article")));
 
         Assert.assertEquals(pizzas.size(), 1);
     }
