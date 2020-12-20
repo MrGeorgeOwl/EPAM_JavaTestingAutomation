@@ -19,7 +19,10 @@ public class DodoPizzaTest {
     private void setUp() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
         ChromeOptions options = new ChromeOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.addArguments("disable-gpu");
+        options.addArguments("window-size=1280,720");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
         driver = new ChromeDriver(options);
         executor = (JavascriptExecutor)driver;
     }
