@@ -46,7 +46,7 @@ public class DodoPizzaTest {
         WebElement cartButton = driver.findElement(By.xpath("//*[@id=\"react-app\"]/nav/div/div[2]/div[2]/button"));
         executor.executeScript("arguments[0].click();", cartButton);
 
-        WebElement price = new WebDriverWait(driver, Duration.ofSeconds(10).toSeconds())
+        WebElement price = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds())
                 .until(d -> d.findElement(By.cssSelector("span .money__value")));
         Assert.assertEquals(price.getText(), "25,90");
     }
