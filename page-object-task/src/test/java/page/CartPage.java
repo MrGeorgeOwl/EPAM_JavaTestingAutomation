@@ -16,7 +16,7 @@ public class CartPage extends BasePage {
     }
 
     public String getPrice() {
-        return new WebDriverWait(driver, Duration.ofSeconds(70).toSeconds())
+        return new WebDriverWait(driver, Duration.ofSeconds(70).getSeconds())
                 .until(d -> d.findElement(By.cssSelector("span .money__value"))).getText();
     }
 
