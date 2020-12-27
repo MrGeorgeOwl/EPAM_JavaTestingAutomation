@@ -8,6 +8,7 @@ public class DodoPizzaTest extends CommonConditions{
 
     @Test
     public void testAddingPizzaToCartPrice() {
+        logger.info("Starting test for pizza price");
         String price = new MenuPage(driver)
                 .openPage()
                 .addPizzaToCart("Нежный лосось")
@@ -18,6 +19,7 @@ public class DodoPizzaTest extends CommonConditions{
 
     @Test
     public void testAddingPizzaToCartAmountOfPizzas() {
+        logger.info("Starting test for checking amount of pizzas in cart");
         int pizzaAmount = new MenuPage(driver)
                 .openPage()
                 .addPizzaToCart("Нежный лосось")

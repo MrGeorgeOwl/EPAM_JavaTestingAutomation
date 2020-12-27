@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout>
+                <Pattern>%d %p %c{2} [%t] %l %n%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <File name="File" filename="target/logs/framework-task.log">
+            <PatternLayout>
+                <Pattern>%d %p %{2} [%t] %n%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppendRef ref="Console"/>
+            <AppendRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
