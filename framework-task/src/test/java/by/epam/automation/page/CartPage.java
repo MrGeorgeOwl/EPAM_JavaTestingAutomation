@@ -5,14 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.reporters.jq.Main;
 
 import java.time.Duration;
 import java.util.List;
 
-public class CartPage extends BasePage {
+public class CartPage extends AbstractPage {
 
-    private By price = By.cssSelector("span .money__value");
-    private By pizzas = By.xpath("//section[1]/article");
+    private final By price = By.cssSelector("span .money__value");
+    private final By pizzas = By.xpath("//section[1]/article");
 
     public CartPage(WebDriver driver) {
         super(driver, "https://dodopizza.by/minsk/cart");
@@ -27,5 +28,11 @@ public class CartPage extends BasePage {
         WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(60).getSeconds());
         return pizzaWait
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(pizzas));
+    }
+
+    @Override
+    public CartPage openPage() {
+        driver.get(url);
+        return this;
     }
 }
