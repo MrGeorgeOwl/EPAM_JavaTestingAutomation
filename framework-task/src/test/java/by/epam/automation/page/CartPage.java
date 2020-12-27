@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartPage extends AbstractPage {
@@ -31,15 +33,28 @@ public class CartPage extends AbstractPage {
 
     public List<WebElement> getPizzas() {
         logger.info("Looking for pizzas");
-        WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(60).getSeconds());
-        return pizzaWait
-                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(pizzasArticleLocator));
+        WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS).getSeconds());
+        try {
+            return pizzaWait
+                    .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(pizzasArticleLocator));
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public CartPage removePizzaFromCart(String pizzaName) {
+        WebElement deleteSvg = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS).getSeconds())
+                .until(d -> d.findElement(By.xpath(String.format(removePizzaSvgString, pizzaName))));
+        Actions builder = new Actions(driver);
+        builder.click(deleteSvg).build().perform();
+        driver.navigate().refresh();
+        return new CartPage(driver);
     }
 
     @Override
     public CartPage openPage() {
         logger.info("Open cart page");
-        driver.get(url);
+        driver.get(URL_PAGE);
         return this;
     }
 }

@@ -32,4 +32,17 @@ public class DodoPizzaTest extends CommonConditions{
                 .size();
         Assert.assertEquals(pizzaAmount, 1, "There is more less then 1 pizza in cart");
     }
+
+    @Test
+    public void testDeletingPizzaOnCartPage() {
+        String pizzaName = "Нежный лосось";
+        int pizzaAmount = new MenuPage(driver)
+                .openPage()
+                .addPizzaToCart(pizzaName)
+                .goToCart()
+                .removePizzaFromCart(pizzaName)
+                .getPizzas()
+                .size();
+        Assert.assertEquals(pizzaAmount, 0, "There is something in cart");
+    }
 }
