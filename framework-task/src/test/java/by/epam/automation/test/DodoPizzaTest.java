@@ -14,7 +14,8 @@ public class DodoPizzaTest extends CommonConditions{
         String pizzaName = "Нежный лосось";
         String price = new MenuPage(driver)
                 .openPage()
-                .addPizzaToCart(pizzaName)
+                .selectPizza(pizzaName)
+                .addPizzaToCart()
                 .goToCart()
                 .getPrice();
         logger.info(String.format("Get price of added pizza: %s", price));
@@ -26,7 +27,8 @@ public class DodoPizzaTest extends CommonConditions{
         String pizzaName = "Нежный лосось";
         int pizzaAmount = new MenuPage(driver)
                 .openPage()
-                .addPizzaToCart(pizzaName)
+                .selectPizza(pizzaName)
+                .addPizzaToCart()
                 .goToCart()
                 .getPizzas()
                 .size();
@@ -38,16 +40,12 @@ public class DodoPizzaTest extends CommonConditions{
         String pizzaName = "Нежный лосось";
         int pizzaAmount = new MenuPage(driver)
                 .openPage()
-                .addPizzaToCart(pizzaName)
+                .selectPizza(pizzaName)
+                .addPizzaToCart()
                 .goToCart()
                 .removePizzaFromCart(pizzaName)
                 .getPizzas()
                 .size();
         Assert.assertEquals(pizzaAmount, 0, "There is something in cart");
-    }
-
-    @Test
-    public void testPizzaPriceChangesWithToppings() {
-
     }
 }
