@@ -17,7 +17,7 @@ public class CommonConditions {
         driver = DriverSingleton.getDriver();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     protected void teardown() {
         DriverSingleton.closeDriver();
     }
