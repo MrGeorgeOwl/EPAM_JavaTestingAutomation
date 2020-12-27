@@ -1,6 +1,5 @@
 package by.epam.automation.test;
 
-import by.epam.automation.page.CartPage;
 import by.epam.automation.page.MenuPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -11,21 +10,20 @@ public class DodoPizzaTest extends CommonConditions{
     public void testAddingPizzaToCartPrice() {
         String price = new MenuPage(driver)
                 .openPage()
-                .addPizzaToCart()
-                .get
-        mainPage.openPage();
-        mainPage.addPizzaToCart("Нежный лосось");
-
-        cartPage.openPage();
-        Assert.assertEquals(cartPage.getPrice(), "25,90");
+                .addPizzaToCart("Нежный лосось")
+                .goToCart()
+                .getPrice();
+        Assert.assertEquals(price, "25,90");
     }
 
     @Test
     public void testAddingPizzaToCartAmountOfPizzas() {
-        mainPage.openPage();
-        mainPage.addPizzaToCart("Нежный лосось");
-
-        cartPage.openPage();
-        Assert.assertEquals(cartPage.getPizzas().size(), 1);
+        int pizzaAmount = new MenuPage(driver)
+                .openPage()
+                .addPizzaToCart("Нежный лосось")
+                .goToCart()
+                .getPizzas()
+                .size();
+        Assert.assertEquals(pizzaAmount, 1);
     }
 }
