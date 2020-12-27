@@ -5,9 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 
 public class MenuPage extends AbstractPage {
+    private final String addPizzaButtonString = "//article[main[h2[contains(text(), \"%s\")]]]//button[contains(text(), \"Выбрать\")]";
+    private final By popupBuyButtonLocator = By.xpath("//div[@class=\"sc-15fdqut-0 feBZgl\"]//button[contains(text(), \"Добавить\")]");
 
-    private final String addPizzaButton = "//article[main[h2[contains(text(), \"%s\")]]]//button[contains(text(), \"Выбрать\")]";
-    private final By popupBuyButton = By.xpath("//div[@class=\"sc-15fdqut-0 feBZgl\"]//button[contains(text(), \"Добавить\")]");
     private Logger logger = LogManager.getLogger(this.getClass().getName());
 
     public MenuPage(WebDriver driver) {
@@ -16,14 +16,14 @@ public class MenuPage extends AbstractPage {
 
     private WebElement getAddingPizzaButton(String name) {
         return driver.findElement(By.xpath(String
-                .format(addPizzaButton, name)));
+                .format(addPizzaButtonString, name)));
     }
 
     public MenuPage addPizzaToCart(String name) {
         logger.info(String.format("Adding pizza %s to cart", name));
         WebElement button = getAddingPizzaButton(name);
         pressButtonWithExecutor(button);
-        WebElement popupBuyButton = driver.findElement(this.popupBuyButton);
+        WebElement popupBuyButton = driver.findElement(this.popupBuyButtonLocator);
         pressButtonWithExecutor(popupBuyButton);
         return new MenuPage(this.driver);
     }

@@ -7,15 +7,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.reporters.jq.Main;
 
 import java.time.Duration;
 import java.util.List;
 
 public class CartPage extends AbstractPage {
+    private final By priceLocator = By.cssSelector("span .money__value");
+    private final By pizzasArticleLocator = By.xpath("//section[1]/article");
 
-    private final By price = By.cssSelector("span .money__value");
-    private final By pizzas = By.xpath("//section[1]/article");
     private Logger logger = LogManager.getLogger(this.getClass().getName());
 
     public CartPage(WebDriver driver) {
@@ -25,14 +24,14 @@ public class CartPage extends AbstractPage {
     public String getPrice() {
         logger.info("Getting total price in cart");
         return new WebDriverWait(driver, Duration.ofSeconds(70).getSeconds())
-                .until(d -> d.findElement(price)).getText();
+                .until(d -> d.findElement(priceLocator)).getText();
     }
 
     public List<WebElement> getPizzas() {
         logger.info("Looking for pizzas");
         WebDriverWait pizzaWait = new WebDriverWait(driver, Duration.ofSeconds(60).getSeconds());
         return pizzaWait
-                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(pizzas));
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(pizzasArticleLocator));
     }
 
     @Override
