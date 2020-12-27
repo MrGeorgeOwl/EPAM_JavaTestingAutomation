@@ -8,12 +8,13 @@ public abstract class AbstractPage {
 
     protected WebDriver driver;
     protected JavascriptExecutor executor;
-    protected final String url;
+    protected final String URL_PAGE;
+    protected final int WAIT_TIMEOUT_SECONDS = 10;
 
     public AbstractPage(WebDriver driver, String url) {
         this.driver = driver;
         this.executor = (JavascriptExecutor) driver;
-        this.url = url;
+        this.URL_PAGE = url;
     }
 
     protected WebDriver getDriver() {
@@ -25,7 +26,7 @@ public abstract class AbstractPage {
     }
 
     protected String getUrl() {
-        return url;
+        return URL_PAGE;
     }
 
     public abstract <T extends AbstractPage> T openPage();

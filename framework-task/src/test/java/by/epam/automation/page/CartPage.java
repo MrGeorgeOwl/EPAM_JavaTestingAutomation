@@ -14,6 +14,8 @@ import java.util.List;
 public class CartPage extends AbstractPage {
     private final By priceLocator = By.cssSelector("span .money__value");
     private final By pizzasArticleLocator = By.xpath("//section[1]/article");
+    private String removePizzaSvgString = "//section[1]/article[//h3[contains(text(), \"%s\")]]//*[local-name() = \"svg\"][@class=\"sc-157hvfs-7 ZGosY\"]";
+    protected final int WAIT_TIMEOUT_SECONDS = 20;
 
     private Logger logger = LogManager.getLogger(this.getClass().getName());
 
@@ -23,7 +25,7 @@ public class CartPage extends AbstractPage {
 
     public String getPrice() {
         logger.info("Getting total price in cart");
-        return new WebDriverWait(driver, Duration.ofSeconds(70).getSeconds())
+        return new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS).getSeconds())
                 .until(d -> d.findElement(priceLocator)).getText();
     }
 

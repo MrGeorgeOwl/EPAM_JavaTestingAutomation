@@ -11,25 +11,25 @@ public class DodoPizzaTest extends CommonConditions{
 
     @Test
     public void testAddingPizzaToCartPrice() {
-        logger.info("Starting test for pizza price");
+        String pizzaName = "Нежный лосось";
         String price = new MenuPage(driver)
                 .openPage()
-                .addPizzaToCart("Нежный лосось")
+                .addPizzaToCart(pizzaName)
                 .goToCart()
                 .getPrice();
         logger.info(String.format("Get price of added pizza: %s", price));
-        Assert.assertEquals(price, "25,90");
+        Assert.assertEquals(price, "25,90", "The price of pizza is not correct");
     }
 
     @Test
     public void testAddingPizzaToCartAmountOfPizzas() {
-        logger.info("Starting test for checking amount of pizzas in cart");
+        String pizzaName = "Нежный лосось";
         int pizzaAmount = new MenuPage(driver)
                 .openPage()
-                .addPizzaToCart("Нежный лосось")
+                .addPizzaToCart(pizzaName)
                 .goToCart()
                 .getPizzas()
                 .size();
-        Assert.assertEquals(pizzaAmount, 1);
+        Assert.assertEquals(pizzaAmount, 1, "There is more less then 1 pizza in cart");
     }
 }

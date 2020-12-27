@@ -36,7 +36,7 @@ public class MenuPage extends AbstractPage {
     @Override
     public MenuPage openPage() {
         logger.info("Opening menu page");
-        driver.get(url);
+        driver.get(URL_PAGE);
         return this;
     }
 }
