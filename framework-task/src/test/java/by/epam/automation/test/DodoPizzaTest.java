@@ -1,10 +1,13 @@
 package by.epam.automation.test;
 
 import by.epam.automation.page.MenuPage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class DodoPizzaTest extends CommonConditions{
+    private Logger logger = LogManager.getLogger();
 
     @Test
     public void testAddingPizzaToCartPrice() {
@@ -14,6 +17,7 @@ public class DodoPizzaTest extends CommonConditions{
                 .addPizzaToCart("Нежный лосось")
                 .goToCart()
                 .getPrice();
+        logger.info(String.format("Get price of added pizza: %s", price));
         Assert.assertEquals(price, "25,90");
     }
 
