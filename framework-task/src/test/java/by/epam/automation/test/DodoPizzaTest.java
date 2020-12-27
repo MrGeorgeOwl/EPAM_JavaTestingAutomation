@@ -45,4 +45,9 @@ public class DodoPizzaTest extends CommonConditions{
                 .size();
         Assert.assertEquals(pizzaAmount, 0, "There is something in cart");
     }
+
+    @Test
+    public void testPizzaPriceChangesWithToppings() {
+
+    }
 }
