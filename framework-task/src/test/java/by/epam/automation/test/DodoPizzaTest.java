@@ -1,6 +1,7 @@
 package by.epam.automation.test;
 
 import by.epam.automation.page.MenuPage;
+import by.epam.automation.provider.PizzaDataProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
@@ -9,9 +10,8 @@ import org.testng.annotations.*;
 public class DodoPizzaTest extends CommonConditions{
     private Logger logger = LogManager.getLogger();
 
-    @Test
-    public void testAddingPizzaToCartPrice() {
-        String pizzaName = "Нежный лосось";
+    @Test(dataProvider = "getPizzasToAddToCart", dataProviderClass = PizzaDataProvider.class)
+    public void testAddingPizzaToCartPrice(String pizzaName, float expectedPrice) {
         float price = new MenuPage(driver)
                 .openPage()
                 .selectPizza(pizzaName)
@@ -19,7 +19,7 @@ public class DodoPizzaTest extends CommonConditions{
                 .goToCart()
                 .getPrice();
         logger.info(String.format("Get price of added pizza: %s", price));
-        Assert.assertEquals(price, 25.90f, "The price of pizza is not correct");
+        Assert.assertEquals(price, expectedPrice, "The price of pizza is not correct");
     }
 
     @Test
