@@ -72,6 +72,12 @@ public class Pizza {
         }
     }
 
+    public void addSeveralToppings(List<String> toppings) {
+        for (String topping: toppings) {
+            addToppingToPizza(topping);
+        }
+    }
+
     public void removeToppingPizza(String toppingName) {
         try {
             Topping topping = getToppingFromTable(toppingName, selectedToppings);

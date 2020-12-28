@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class MenuPage extends AbstractPage {
     protected String pageUrl = "https://dodopizza.by/minsk";
     private final String addPizzaButtonString = "//article[main[h2[contains(text(), \"%s\")]]]//button[contains(text(), \"Выбрать\")]";
@@ -53,6 +55,11 @@ public class MenuPage extends AbstractPage {
 
     public MenuPage addToppingToPizza(String topping) {
         selectedPizza.addToppingToPizza(topping);
+        return new MenuPage(driver, selectedPizza);
+    }
+
+    public MenuPage addSeveralToppingsToPizza(List<String> toppings) {
+        selectedPizza.addSeveralToppings(toppings);
         return new MenuPage(driver, selectedPizza);
     }
 

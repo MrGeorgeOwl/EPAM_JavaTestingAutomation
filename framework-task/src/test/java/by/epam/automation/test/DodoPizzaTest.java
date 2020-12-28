@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.List;
+
 public class DodoPizzaTest extends CommonConditions{
     private Logger logger = LogManager.getLogger();
 
@@ -49,17 +51,16 @@ public class DodoPizzaTest extends CommonConditions{
         Assert.assertEquals(pizzaAmount, 0, "There is something in cart");
     }
 
-    @Test
-    public void testAddToppingsToPizza() {
-        String pizzaName = "Нежный лосось";
+    @Test(dataProvider = "getPizzasWithToppingsToAdd", dataProviderClass = PizzaDataProvider.class)
+    public void testAddToppingsToPizza(String pizzaName, List<String> toppings, float expectedPrice) {
         float price = new MenuPage(driver)
                 .openPage()
                 .selectPizza(pizzaName)
-                .addToppingToPizza("Чеддер и пармезан")
+                .addSeveralToppingsToPizza(toppings)
                 .addPizzaToCart()
                 .goToCart()
                 .getPrice();
-        Assert.assertEquals(price, 28.70f, "Price is different");
+        Assert.assertEquals(price, expectedPrice, "Price is different");
     }
 
     @Test
