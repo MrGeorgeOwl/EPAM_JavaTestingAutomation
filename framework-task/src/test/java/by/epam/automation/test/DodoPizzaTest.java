@@ -12,14 +12,14 @@ public class DodoPizzaTest extends CommonConditions{
     @Test
     public void testAddingPizzaToCartPrice() {
         String pizzaName = "Нежный лосось";
-        String price = new MenuPage(driver)
+        float price = new MenuPage(driver)
                 .openPage()
                 .selectPizza(pizzaName)
                 .addPizzaToCart()
                 .goToCart()
                 .getPrice();
         logger.info(String.format("Get price of added pizza: %s", price));
-        Assert.assertEquals(price, "25,90", "The price of pizza is not correct");
+        Assert.assertEquals(price, 25.90f, "The price of pizza is not correct");
     }
 
     @Test
@@ -47,5 +47,18 @@ public class DodoPizzaTest extends CommonConditions{
                 .getPizzas()
                 .size();
         Assert.assertEquals(pizzaAmount, 0, "There is something in cart");
+    }
+
+    @Test
+    public void testAddToppingsToPizza() {
+        String pizzaName = "Нежный лосось";
+        float price = new MenuPage(driver)
+                .openPage()
+                .selectPizza(pizzaName)
+                .addToppingToPizza("Чеддер и пармезан")
+                .addPizzaToCart()
+                .goToCart()
+                .getPrice();
+        Assert.assertEquals(price, 28.70f, "Price is different");
     }
 }

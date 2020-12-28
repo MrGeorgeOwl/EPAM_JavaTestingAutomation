@@ -3,18 +3,19 @@ package by.epam.automation.page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 public abstract class AbstractPage {
 
     protected WebDriver driver;
     protected JavascriptExecutor executor;
-    protected final String URL_PAGE;
+    protected String pageUrl;
     protected final int WAIT_TIMEOUT_SECONDS = 10;
 
-    public AbstractPage(WebDriver driver, String url) {
+    public AbstractPage(WebDriver driver) {
         this.driver = driver;
         this.executor = (JavascriptExecutor) driver;
-        this.URL_PAGE = url;
+        PageFactory.initElements(driver, this);
     }
 
     protected WebDriver getDriver() {
@@ -26,7 +27,7 @@ public abstract class AbstractPage {
     }
 
     protected String getUrl() {
-        return URL_PAGE;
+        return pageUrl;
     }
 
     public abstract <T extends AbstractPage> T openPage();

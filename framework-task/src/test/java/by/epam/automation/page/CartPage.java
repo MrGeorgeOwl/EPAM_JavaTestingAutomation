@@ -14,21 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartPage extends AbstractPage {
+    protected String pageUrl = "https://dodopizza.by/minsk/cart";
     private final By priceLocator = By.cssSelector("span .money__value");
     private final By pizzasArticleLocator = By.xpath("//section[1]/article");
     private String removePizzaSvgString = "//section[1]/article[//h3[contains(text(), \"%s\")]]//*[local-name() = \"svg\"][@class=\"sc-157hvfs-7 ZGosY\"]";
+
     protected final int WAIT_TIMEOUT_SECONDS = 20;
 
     private Logger logger = LogManager.getLogger(this.getClass().getName());
 
     public CartPage(WebDriver driver) {
-        super(driver, "https://dodopizza.by/minsk/cart");
+        super(driver);
     }
 
-    public String getPrice() {
+    public float getPrice() {
         logger.info("Getting total price in cart");
-        return new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS).getSeconds())
-                .until(d -> d.findElement(priceLocator)).getText();
+        return Float.parseFloat(new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS).getSeconds())
+                .until(d -> d.findElement(priceLocator)).getText().replace(",", "."));
     }
 
     public List<WebElement> getPizzas() {
@@ -54,7 +56,7 @@ public class CartPage extends AbstractPage {
     @Override
     public CartPage openPage() {
         logger.info("Open cart page");
-        driver.get(URL_PAGE);
+        driver.get(pageUrl);
         return this;
     }
 }
