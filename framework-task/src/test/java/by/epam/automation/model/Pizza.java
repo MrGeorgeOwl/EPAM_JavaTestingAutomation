@@ -74,10 +74,10 @@ public class Pizza {
 
     public void removeToppingPizza(String toppingName) {
         try {
-            Topping topping = getToppingFromTable(toppingName, availableToppings);
+            Topping topping = getToppingFromTable(toppingName, selectedToppings);
             price -= topping.getPrice();
             Actions builder = new Actions(driver);
-            builder.click(availableToppings.get(topping));
+            builder.click(selectedToppings.get(topping)).build().perform();
             availableToppings.put(topping, selectedToppings.get(topping));
             selectedToppings.remove(topping);
         } catch (NoSuchElementException e) {

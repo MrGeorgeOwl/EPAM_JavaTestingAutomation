@@ -61,4 +61,19 @@ public class DodoPizzaTest extends CommonConditions{
                 .getPrice();
         Assert.assertEquals(price, 28.70f, "Price is different");
     }
+
+    @Test
+    public void testRemoveToppingsFromPizza() {
+        String pizzaName = "Нежный лосось";
+        float price = new MenuPage(driver)
+                .openPage()
+                .selectPizza(pizzaName)
+                .addToppingToPizza("Чеддер и пармезан")
+                .addToppingToPizza("Маслины")
+                .removeToppingFromPizza("Маслины")
+                .addPizzaToCart()
+                .goToCart()
+                .getPrice();
+        Assert.assertEquals(price, 28.70f, "Price is different");
+    }
 }
