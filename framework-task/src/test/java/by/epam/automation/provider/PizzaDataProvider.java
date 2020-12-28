@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class PizzaDataProvider {
 
-    private static final String PIZZA_FILE = "src/test/java/resources/provider/pizzas.csv";
-    private static final String PIZZA_WITH_TOPPINGS_FILE = "src/test/java/resources/provider/pizzas_with_toppings.csv";
+    private static final String PIZZA_FILE = "src/test/resources/provider/pizzas.csv";
+    private static final String PIZZA_WITH_TOPPINGS_FILE = "src/test/resources/provider/pizzas_with_toppings.csv";
 
     @DataProvider
     public static Object[][] getPizzasToAddToCart() {
